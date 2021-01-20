@@ -33,8 +33,8 @@ public class MedicoController {
 	@GetMapping("/hello")
     String home() {
 		
-		Medico medico = medicoService.save("pepe","sanchez","pepe96","1234","00000");
-		Paciente paciente = pacienteService.save(null);
+		Medico medico = medicoService.save(new Medico("pepe","sanchez","pepe96","1234","00000"));
+		Paciente paciente = pacienteService.save(new Paciente("pepe","sanchez","pepe96","1234", null, null, null, null));
 		
 		medicoService.addPaciente(medico, paciente);
 		
