@@ -24,7 +24,7 @@ public class DiagnosticoDAOMock implements IDiagnosticoDAO {
 	}
 
 	@Override
-	public void delete(Diagnostico d) {
+	public void remove(Diagnostico d) {
 		// TODO Auto-generated method stub
 
 	}

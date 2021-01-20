@@ -25,7 +25,7 @@ public class MedicoDAOMock implements IMedicoDAO {
 	}
 
 	@Override
-	public void delete(Usuario p) {
+	public void remove(Usuario p) {
 		// TODO Auto-generated method stub
 
 	}
