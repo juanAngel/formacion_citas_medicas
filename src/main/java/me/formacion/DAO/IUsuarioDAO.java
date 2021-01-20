@@ -6,7 +6,7 @@ public interface IUsuarioDAO {
 	Usuario getById(Long id);
 	Usuario[] getAll();
 	void store(Usuario p);
-	void delete(Usuario p);
+	void remove(Usuario p);
 
 	Usuario[] findByNombre(String name);
 	Usuario[] findByApellidos(String apellidos);

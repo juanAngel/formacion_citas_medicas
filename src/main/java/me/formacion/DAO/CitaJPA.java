@@ -1,18 +1,31 @@
 package me.formacion.DAO;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import me.formacion.Config;
 import me.formacion.model.Cita;
 
 @Repository
+@Transactional
 public class CitaJPA implements ICitaDAO {
 	@PersistenceContext(unitName = Config.PERSISTENCE_UNIT_NAME)
 	private EntityManager em;
 
+	public CitaJPA() {
+		// TODO Auto-generated constructor stub
+	}
 	public CitaJPA(EntityManager em) {
 		super();
 		this.em = em;
@@ -22,14 +35,31 @@ public class CitaJPA implements ICitaDAO {
 	public Cita getById(Long id) {
 		Cita result = null;
 		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Cita> query = cb.createQuery(Cita.class);
+		Root<Cita> tables = query.from(Cita.class);
+		
+		query.select(tables).where(cb.equal(tables.get("id"), id));
+		
+		List<Cita> resultList = em.createQuery(query).getResultList();
+		if(resultList != null && !resultList.isEmpty()) {
+			result = resultList.get(0);
+		}
+		
 		return result;
 	}
 
 	@Override
 	public Cita[] getAll() {
-		Cita[] result = null;
+		List<Cita> result = null;
 		
-		return result;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Cita> query = cb.createQuery(Cita.class);
+		
+		query.select(query.from(Cita.class));
+		result = em.createQuery(query).getResultList();
+		
+		return (Cita[]) result.toArray();
 	}
 
 	@Override
@@ -38,9 +68,32 @@ public class CitaJPA implements ICitaDAO {
 	}
 
 	@Override
-	public void delete(Cita d) {
-		// TODO Auto-generated method stub
+	public void remove(Cita d) {
+		em.remove(d);
+	}
+
+	@Override
+	public Cita[] getAtDate(Date start, Date end) {
+		List<Cita> result;
 		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Cita> query = cb.createQuery(Cita.class);
+		Root<Cita> tables = query.from(Cita.class);
+		
+		Expression<Boolean> exp1 = null, exp2 = null;
+		Predicate predicate = null;
+		if(start != null) {
+			exp1 = cb.greaterThanOrEqualTo(tables.get("fechaHora"), start);
+		}
+		if(end != null) {
+			exp2 = cb.lessThanOrEqualTo(tables.get("fechaHora"), end);
+		}
+		predicate = cb.and(exp1, exp2);
+		query.select(tables).where(predicate);
+		
+		result = em.createQuery(query).getResultList();
+
+		return (Cita[]) result.toArray();
 	}
 
 }

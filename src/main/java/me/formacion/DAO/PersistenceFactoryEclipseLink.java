@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
+//@Repository
 public class PersistenceFactoryEclipseLink extends PersistenceFactory {
     private static final String PERSISTENCE_UNIT_NAME = "FORACION";
 	private EntityManagerFactory factory;
