@@ -25,5 +25,11 @@ public class CitaService {
 	public Cita[] getAll() {
 		return citaDAO.getAll();
 	}
+	public void store(Cita c) {
+		citaDAO.store(c);
+	}
+	public void remove(Cita c) {
+		citaDAO.remove(c);
+	}
 
 }

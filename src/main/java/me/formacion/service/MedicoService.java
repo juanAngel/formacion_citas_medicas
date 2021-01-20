@@ -33,11 +33,8 @@ public class MedicoService {
 		medicoDAO.store(m);
 		return m;
 	}
-	public void update(Medico m) {
-		
-	}
 	public void remove(Medico m) {
-		
+		medicoDAO.remove(m);
 	}
 	public Medico getOne(long id) {
 		return (Medico) medicoDAO.getById(id);
@@ -46,16 +43,39 @@ public class MedicoService {
 		return (Medico[]) medicoDAO.getAll();
 	}
 	public Medico addPaciente(Medico m,Paciente p) {
-		return null;
+		m.getPacientes().add(p);
+		p.getMedicos().add(m);
+		medicoDAO.store(m);
+		pacienteDAO.store(p);
+		return m;
 	}
 	public Medico removePaciente(Medico m,Paciente p) {
-		return null;
+		m.getPacientes().remove(p);
+		p.getMedicos().remove(m);
+		medicoDAO.store(m);
+		pacienteDAO.store(p);
+		return m;
 	}
-	public Medico addCita(Medico m,Cita c) {
-		return null;
+	public Medico addCita(Medico m,Paciente p,Cita c) {
+		m.getCitas().add(c);
+		p.getCitas().add(c);
+		c.setMedico(m);
+		c.setPaciente(p);
+		
+		medicoDAO.store(m);
+		pacienteDAO.store(p);
+		citaDAO.store(c);
+		return m;
 	}
-	public Medico removeCita(Medico m,Cita c) {
-		return null;
+	public Medico removeCita(Medico m,Paciente p,Cita c) {
+		m.getCitas().remove(c);
+		p.getCitas().remove(c);
+		c.setMedico(null);
+		c.setPaciente(null);
+		medicoDAO.store(m);
+		pacienteDAO.store(p);
+		citaDAO.store(c);
+		return m;
 	}
 
 }
