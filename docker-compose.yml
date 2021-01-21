@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+   oracle-db:
+      image: vitorfec/oracle-xe-18c
+      ports:
+        - 1521:1521
+        - 8080:8080
+        - 5500:5500
+      environment:
+        ORACLE_PWD: "1234567890"
+#        ORACLE_SID: "FORMACION"
+      volumes:
+        - db:/opt/oracle/oradata/
+        - db_setup:/opt/oracle/scripts/setup/
+        - db_startup:/opt/oracle/scripts/startup/
+volumes:
+   db:
+     driver: local
+   db_setup:
+     driver: local
+   db_startup:
+     driver: local
