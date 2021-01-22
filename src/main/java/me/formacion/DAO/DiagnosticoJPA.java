@@ -18,13 +18,12 @@ import me.formacion.model.Paciente;
 
 @Repository
 @Transactional
-public class DiagnosticoJPA implements IDiagnosticoDAO {
+public class DiagnosticoJPA implements IDiagnosticoDAO{
 
-	@PersistenceContext(unitName = Config.PERSISTENCE_UNIT_NAME)
+	@PersistenceContext
 	private EntityManager em;
 
 	public DiagnosticoJPA() {
-		// TODO Auto-generated constructor stub
 	}
 	public DiagnosticoJPA(EntityManager em) {
 		super();

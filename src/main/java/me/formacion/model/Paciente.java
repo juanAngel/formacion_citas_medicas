@@ -20,6 +20,9 @@ public class Paciente extends Usuario{
 	@OneToMany(targetEntity = Cita.class)
 	private Set<Cita> citas;
     
+	public Paciente() {
+		super();
+	}
 	public Paciente(String nombre, String apellidos, String usuario, String clave, String NSS, String numTarjeta,
 			String telefono, String direccion) {
 		super(nombre, apellidos, usuario, clave);

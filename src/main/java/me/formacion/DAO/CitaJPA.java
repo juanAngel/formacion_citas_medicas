@@ -20,7 +20,7 @@ import me.formacion.model.Cita;
 @Repository
 @Transactional
 public class CitaJPA implements ICitaDAO {
-	@PersistenceContext(unitName = Config.PERSISTENCE_UNIT_NAME)
+	@PersistenceContext
 	private EntityManager em;
 
 	public CitaJPA() {

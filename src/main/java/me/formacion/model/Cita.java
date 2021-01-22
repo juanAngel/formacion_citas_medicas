@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Cita implements IUnique{
 	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@OneToOne(targetEntity = Diagnostico.class)
 	private Diagnostico diagnostico;
@@ -32,7 +32,7 @@ public class Cita implements IUnique{
     private int attibute11;
 
     public Cita() {
-        
+        super();
     }
 
 	public Long getId() {

@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import me.formacion.Config;
 import me.formacion.model.Medico;
@@ -16,8 +17,10 @@ import me.formacion.model.Paciente;
 import me.formacion.model.Usuario;
 
 @Repository
+@Transactional
 public class PacienteJPA implements IPacienteDAO {
-	@PersistenceContext(unitName = Config.PERSISTENCE_UNIT_NAME)
+
+	@PersistenceContext()
 	private EntityManager em;
 
 	public PacienteJPA() {
@@ -62,6 +65,10 @@ public class PacienteJPA implements IPacienteDAO {
 	@Override
 	public void store(Usuario p) {
 		em.persist(p);
+	}
+	@Override
+	public Paciente merge(Usuario p) {
+		return (Paciente) em.merge(p);
 	}
 
 	@Override

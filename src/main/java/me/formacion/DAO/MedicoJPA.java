@@ -8,18 +8,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import me.formacion.Config;
 import me.formacion.model.Medico;
 import me.formacion.model.Usuario;
 
 @Repository
-@Transactional
 public class MedicoJPA implements IMedicoDAO {
-	@PersistenceContext(unitName = Config.PERSISTENCE_UNIT_NAME)
+	
+	@PersistenceContext
 	private EntityManager em;
 
 	public MedicoJPA() {
@@ -79,6 +76,9 @@ public class MedicoJPA implements IMedicoDAO {
 	@Override
 	public void store(Usuario m) {
 		em.persist(m);
+	}
+	public Medico merge(Usuario m) {
+		return (Medico) em.merge(m);
 	}
 
 	@Override

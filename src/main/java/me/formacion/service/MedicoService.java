@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import me.formacion.DAO.ICitaDAO;
 import me.formacion.DAO.IMedicoDAO;
 import me.formacion.DAO.IPacienteDAO;
+import me.formacion.DAO.MedicoJPA;
 import me.formacion.model.Cita;
 import me.formacion.model.Medico;
 import me.formacion.model.Paciente;
@@ -29,6 +30,7 @@ public class MedicoService {
 		this.citaDAO = citaDAO;
 	}
 	
+	@Transactional
 	public Medico save(Medico m) {
 		medicoDAO.store(m);
 		return m;
@@ -45,8 +47,8 @@ public class MedicoService {
 	public Medico addPaciente(Medico m,Paciente p) {
 		m.getPacientes().add(p);
 		p.getMedicos().add(m);
-		medicoDAO.store(m);
-		pacienteDAO.store(p);
+		medicoDAO.merge(m);
+		pacienteDAO.merge(p);
 		return m;
 	}
 	public Medico removePaciente(Medico m,Paciente p) {

@@ -1,6 +1,8 @@
 package me.formacion.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -10,6 +12,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Diagnostico implements IUnique{
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@OneToOne(targetEntity = Cita.class)
 	private Cita cita;
@@ -17,7 +20,7 @@ public class Diagnostico implements IUnique{
     private String enfermedad;
 
     public Diagnostico() {
-        
+        super();
     }
 
 	public Long getId() {

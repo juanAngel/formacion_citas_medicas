@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class Usuario implements IUnique{
 	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
     private String nombre;
 
@@ -19,7 +19,6 @@ public abstract class Usuario implements IUnique{
     private String clave;
     
     public Usuario() {
-		// TODO Auto-generated constructor stub
 	}
 
     public Usuario(String nombre, String apellidos, String usuario, String clave) {

@@ -21,6 +21,7 @@ public class Medico extends Usuario{
 
 
     public Medico() {
+    	super();
 	}
 	public Medico(String nombre, String apellidos, String usuario, String clave, String numColegiado) {
 		super(nombre, apellidos, usuario, clave);
