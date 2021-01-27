@@ -10,6 +10,7 @@ import me.formacion.DAO.IPacienteDAO;
 import me.formacion.model.Cita;
 import me.formacion.model.Medico;
 import me.formacion.model.Paciente;
+import me.formacion.model.Usuario;
 
 @Service
 @Transactional
@@ -38,6 +39,8 @@ public class PacienteService {
 	}
 
 	public Paciente getOne(long id) {
+		if(id == 0)
+			return null;
 		return (Paciente) pacienteDAO.getById(id);
 	}
 	public Paciente[] getAll() {
@@ -77,5 +80,31 @@ public class PacienteService {
 		pacienteDAO.store(p);
 		citaDAO.store(c);
 		return p;
+	}
+
+	public Paciente[] findByNombre(String name) {
+		Usuario[] pacientes = pacienteDAO.findByNombre(name);
+
+		return (Paciente[]) pacientes;
+	}
+	public Paciente[] findByApellidos(String apellidos) {
+		Usuario[] pacientes = pacienteDAO.findByApellidos(apellidos);
+
+		return (Paciente[]) pacientes;
+	}
+	public Paciente[] findByUsuario(String usuario) {
+		Usuario[] pacientes = pacienteDAO.findByUsuario(usuario);
+
+		return (Paciente[]) pacientes;
+	}
+	public Paciente[] findByTelefono(String telefono) {
+		Usuario[] pacientes = pacienteDAO.findByTelefono(telefono);
+		
+		return (Paciente[]) pacientes;
+	}
+	public Paciente[] findByNumTarjeta(String numTarjeta) {
+		Usuario[] pacientes = pacienteDAO.findByNumTarjeta(numTarjeta);
+		
+		return (Paciente[]) pacientes;
 	}
 }

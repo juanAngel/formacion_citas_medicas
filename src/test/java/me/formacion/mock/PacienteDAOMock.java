@@ -60,4 +60,10 @@ public class PacienteDAOMock implements IPacienteDAO{
 		return null;
 	}
 
+	@Override
+	public Usuario merge(Usuario p) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

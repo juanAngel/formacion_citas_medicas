@@ -19,8 +19,11 @@ public class DiagnosticoService {
 	}
 
 	public Diagnostico getOne(long id) {
+		if(id == 0)
+			return null;
 		return diagnosticoDAO.getById(id);
 	}
+	
 	public Diagnostico[] getAll() {
 		return diagnosticoDAO.getAll();
 	}

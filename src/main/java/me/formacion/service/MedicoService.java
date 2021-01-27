@@ -11,6 +11,7 @@ import me.formacion.DAO.MedicoJPA;
 import me.formacion.model.Cita;
 import me.formacion.model.Medico;
 import me.formacion.model.Paciente;
+import me.formacion.model.Usuario;
 
 @Service
 @Transactional
@@ -35,15 +36,21 @@ public class MedicoService {
 		medicoDAO.store(m);
 		return m;
 	}
+	
 	public void remove(Medico m) {
 		medicoDAO.remove(m);
 	}
+	
 	public Medico getOne(long id) {
+		if(id == 0)
+			return null;
 		return (Medico) medicoDAO.getById(id);
 	}
+	
 	public Medico[] getAll() {
 		return (Medico[]) medicoDAO.getAll();
 	}
+	
 	public Medico addPaciente(Medico m,Paciente p) {
 		m.getPacientes().add(p);
 		p.getMedicos().add(m);
@@ -51,6 +58,7 @@ public class MedicoService {
 		pacienteDAO.merge(p);
 		return m;
 	}
+	
 	public Medico removePaciente(Medico m,Paciente p) {
 		m.getPacientes().remove(p);
 		p.getMedicos().remove(m);
@@ -58,6 +66,7 @@ public class MedicoService {
 		pacienteDAO.store(p);
 		return m;
 	}
+	
 	public Medico addCita(Medico m,Paciente p,Cita c) {
 		m.getCitas().add(c);
 		p.getCitas().add(c);
@@ -69,6 +78,7 @@ public class MedicoService {
 		citaDAO.store(c);
 		return m;
 	}
+	
 	public Medico removeCita(Medico m,Paciente p,Cita c) {
 		m.getCitas().remove(c);
 		p.getCitas().remove(c);
@@ -78,6 +88,30 @@ public class MedicoService {
 		pacienteDAO.store(p);
 		citaDAO.store(c);
 		return m;
+	}
+
+	public Medico[] findByNombre(String name) {
+		Usuario[] medicos = medicoDAO.findByNombre(name);
+		
+		return (Medico[]) medicos;
+	}
+	
+	public Medico[] findByApellidos(String apellidos) {
+		Usuario[] medicos = medicoDAO.findByApellidos(apellidos);
+		
+		return (Medico[]) medicos;
+	}
+	
+	public Medico[] findByUsuario(String usuario) {
+		Usuario[] medicos = medicoDAO.findByUsuario(usuario);
+		
+		return (Medico[]) medicos;
+	}
+
+	public Medico[] findByNumColegiado(String numColegiado) {
+		Medico[] medicos = medicoDAO.findByNumColegiado(numColegiado);
+		
+		return medicos;
 	}
 
 }
