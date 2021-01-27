@@ -68,8 +68,8 @@ public class CitaJPA implements ICitaDAO {
 	}
 
 	@Override
-	public void remove(Cita d) {
-		em.remove(d);
+	public void remove(Cita c) {
+		em.remove(em.merge(c));
 	}
 
 	@Override

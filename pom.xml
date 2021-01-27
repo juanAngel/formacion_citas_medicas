@@ -17,9 +17,15 @@
 		<org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
 		<spring.version>5.2.12.RELEASE</spring.version>
 		<spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+		<spring-web.version>3.2.2.RELEASE</spring-web.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>2.0.1.Final</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -85,9 +91,9 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-		      <groupId>org.springframework</groupId>
-		      <artifactId>spring-orm</artifactId>
-		      <version>${spring.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

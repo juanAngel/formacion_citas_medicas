@@ -129,8 +129,7 @@ public class PacienteJPA implements IPacienteDAO {
 
 	@Override
 	public void remove(Usuario p) {
-		// TODO Auto-generated method stub
-		
+		em.remove(em.merge(p));
 	}
 
 }

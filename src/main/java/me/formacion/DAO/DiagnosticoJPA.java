@@ -68,7 +68,7 @@ public class DiagnosticoJPA implements IDiagnosticoDAO{
 
 	@Override
 	public void remove(Diagnostico d) {
-		em.remove(d);
+		em.remove(em.merge(d));
 	}
 
 }
