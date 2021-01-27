@@ -18,7 +18,7 @@ import me.formacion.service.DiagnosticoService;
 import me.formacion.service.MedicoService;
 import me.formacion.service.PacienteService;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public abstract class CitaMapper {
 
 	@Autowired

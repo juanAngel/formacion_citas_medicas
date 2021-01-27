@@ -15,7 +15,7 @@ import me.formacion.model.DTO.DiagnosticoDTO;
 import me.formacion.model.DTO.DiagnosticoWithIdDTO;
 import me.formacion.service.CitaService;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public abstract class DiagnosticoMapper {
 	@Autowired
 	private CitaService citaService;

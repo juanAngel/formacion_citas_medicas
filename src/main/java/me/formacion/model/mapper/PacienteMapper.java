@@ -3,6 +3,7 @@ package me.formacion.model.mapper;
 import java.util.Date;
 import java.util.Set;
 
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import me.formacion.model.Cita;
@@ -16,6 +17,7 @@ import me.formacion.model.DTO.PacienteWithIdDTO;
 import me.formacion.service.CitaService;
 import me.formacion.service.MedicoService;
 
+@Mapper(componentModel = "spring")
 public abstract class PacienteMapper {
 
 	@Autowired
@@ -25,7 +27,7 @@ public abstract class PacienteMapper {
 	
 	public abstract PacienteDTO toDTO(Paciente m);
 	public abstract PacienteWithIdDTO toDTOWithId(Paciente m);
-	public abstract Paciente toEntity(MedicoWithIdDTO m);
+	public abstract Paciente toEntity(PacienteWithIdDTO p);
 
 	public abstract Set<Long> mapPacientes(Set<Paciente> value);
 	public abstract Set<Long> mapCitas(Set<Cita> value);

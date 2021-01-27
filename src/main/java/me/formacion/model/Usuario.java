@@ -9,7 +9,9 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public abstract class Usuario implements IUnique{
-	@Id 
+	@Id /*
+	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="MySequenceGenerator")
+	@SequenceGenerator(allocationSize=1, schema="myschema",  name="MySequenceGenerator", sequenceName = "mysequence")*/
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
     private String nombre;

@@ -7,6 +7,10 @@ public class UsuarioDTO {
 	private String apellidos;
     private String usuario;
     
+    public UsuarioDTO() {
+		// TODO Auto-generated constructor stub
+	}
+    
 	public UsuarioDTO(Long id, String nombre, String apellidos, String usuario) {
 		super();
 		this.id = id;
