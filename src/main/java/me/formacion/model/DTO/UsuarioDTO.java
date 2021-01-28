@@ -8,7 +8,6 @@ public class UsuarioDTO {
     private String usuario;
     
     public UsuarioDTO() {
-		// TODO Auto-generated constructor stub
 	}
     
 	public UsuarioDTO(Long id, String nombre, String apellidos, String usuario) {

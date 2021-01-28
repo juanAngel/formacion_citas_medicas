@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -12,6 +13,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import me.formacion.model.Medico;
+import me.formacion.model.Paciente;
 import me.formacion.model.Usuario;
 
 @Repository
@@ -38,10 +40,7 @@ public class MedicoJPA implements IMedicoDAO {
 		
 		query.select(tables).where(cb.equal(tables.get("id"), id));
 		
-		Query criteriaQuery = em.createQuery(query);
-		List<Medico> resultList = criteriaQuery.getResultList();
-		
-		System.out.println("resultList sql="+criteriaQuery.toString());
+		List<Medico> resultList = em.createQuery(query).getResultList();
 		
 		if(resultList != null && !resultList.isEmpty()) {
 			result = resultList.get(0);
@@ -60,8 +59,9 @@ public class MedicoJPA implements IMedicoDAO {
 		
 		query.select(tables).where(cb.like(tables.get("numColegiado"), numColegiado));
 		result = em.createQuery(query).getResultList();
+		Medico[] array = new Medico[result.size()];
 		
-		return (Medico[]) result.toArray();
+		return result.toArray(array);
 	}
 	
 	@Override
@@ -73,13 +73,9 @@ public class MedicoJPA implements IMedicoDAO {
 		
 		query.select(query.from(Medico.class));
 		result = em.createQuery(query).getResultList();
-		Medico[] m = new Medico[result.size()];
+		Medico[] array = new Medico[result.size()];
 		
-		for (int i = 0;i<result.size();i++) {
-			m[i] = result.get(i);
-		}
-		
-		return m;
+		return result.toArray(array);
 	}
 
 	@Override
@@ -99,15 +95,15 @@ public class MedicoJPA implements IMedicoDAO {
 		CriteriaQuery<Medico> query = cb.createQuery(Medico.class);
 		Root<Medico> tables = query.from(Medico.class);
 		
-		query.select(tables).where(cb.like(tables.get("nombre"), name));
-		result = em.createQuery(query).getResultList();
-		Medico[] m = new Medico[result.size()];
+		query.select(tables).where(cb.like(tables.get("nombre"), "%"+name+"%"));
+		TypedQuery<Medico> cryteriaQuery = em.createQuery(query);
+		result = cryteriaQuery.getResultList();
 		
-		for (int i = 0;i<result.size();i++) {
-			m[i] = result.get(i);
-		}
+		System.out.println("MedicoJPA.findByNombre() query="+cryteriaQuery.toString());
 		
-		return m;
+		Medico[] array = new Medico[result.size()];
+		
+		return result.toArray(array);
 	}
 
 	@Override
@@ -118,15 +114,11 @@ public class MedicoJPA implements IMedicoDAO {
 		CriteriaQuery<Medico> query = cb.createQuery(Medico.class);
 		Root<Medico> tables = query.from(Medico.class);
 		
-		query.select(tables).where(cb.like(tables.get("apellidos"), apellidos));
+		query.select(tables).where(cb.like(tables.get("apellidos"), "%"+apellidos+"%"));
 		result = em.createQuery(query).getResultList();
-		Medico[] m = new Medico[result.size()];
+		Medico[] array = new Medico[result.size()];
 		
-		for (int i = 0;i<result.size();i++) {
-			m[i] = result.get(i);
-		}
-		
-		return m;
+		return result.toArray(array);
 	}
 
 	@Override
@@ -137,15 +129,11 @@ public class MedicoJPA implements IMedicoDAO {
 		CriteriaQuery<Medico> query = cb.createQuery(Medico.class);
 		Root<Medico> tables = query.from(Medico.class);
 		
-		query.select(tables).where(cb.like(tables.get("usuario"), usuario));
+		query.select(tables).where(cb.like(tables.get("usuario"), "%"+usuario+"%"));
 		result = em.createQuery(query).getResultList();
-		Medico[] m = new Medico[result.size()];
+		Medico[] array = new Medico[result.size()];
 		
-		for (int i = 0;i<result.size();i++) {
-			m[i] = result.get(i);
-		}
-		
-		return m;
+		return result.toArray(array);
 	}
 
 	@Override

@@ -38,6 +38,15 @@ public class MedicoService {
 	}
 	
 	public void remove(Medico m) {
+		//Elimina las citas
+		for(Cita cita: m.getCitas()) {
+			removeCita(m, cita.getPaciente(), cita);
+		}
+		//Desvincula a los pacientes del medico
+		for (Paciente paciente : m.getPacientes()) {
+			paciente.getMedicos().remove(m);
+			pacienteDAO.store(paciente);
+		}
 		medicoDAO.remove(m);
 	}
 	

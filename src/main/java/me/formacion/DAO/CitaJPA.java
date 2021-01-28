@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import me.formacion.Config;
 import me.formacion.model.Cita;
+import me.formacion.model.Paciente;
 
 @Repository
 @Transactional
@@ -58,8 +59,9 @@ public class CitaJPA implements ICitaDAO {
 		
 		query.select(query.from(Cita.class));
 		result = em.createQuery(query).getResultList();
+		Cita[] array = new Cita[result.size()];
 		
-		return (Cita[]) result.toArray();
+		return result.toArray(array);
 	}
 
 	@Override
@@ -92,8 +94,9 @@ public class CitaJPA implements ICitaDAO {
 		query.select(tables).where(predicate);
 		
 		result = em.createQuery(query).getResultList();
-
-		return (Cita[]) result.toArray();
+		Cita[] array = new Cita[result.size()];
+		
+		return result.toArray(array);
 	}
 
 }

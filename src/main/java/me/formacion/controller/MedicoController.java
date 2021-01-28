@@ -46,17 +46,16 @@ public class MedicoController {
 	private CitaMapper citaMapper;
 	
 	@PostMapping("/")
-	Long save(@RequestBody MedicoWithIdDTO medicoDTO){		
+	MedicoWithIdDTO save(@RequestBody MedicoWithIdDTO medicoDTO){		
 		if(medicoDTO == null) {
 			throw new InvalidParameterException();
 		}
-		Long medicoId = (long) 0;
 		Medico medico = medicoMapper.toEntity(medicoDTO);
 		medicoService.save(medico);
-		medicoId = medico.getId();
+		medicoDTO.setId(medico.getId());
 		
 		
-		return medicoId;
+		return medicoDTO;
 	}
 	@GetMapping("/")
 	List<MedicoWithIdDTO> getAll(){

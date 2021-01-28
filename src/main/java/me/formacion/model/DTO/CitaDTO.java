@@ -10,6 +10,9 @@ public class CitaDTO {
     private String motivoCita;
     private int attibute11;
     
+    public CitaDTO() {
+	}
+    
 	public CitaDTO(Long id, long fechaHora, String motivoCita, int attibute11) {
 		super();
 		this.id = id;

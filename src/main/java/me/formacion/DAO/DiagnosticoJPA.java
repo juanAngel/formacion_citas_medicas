@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import me.formacion.Config;
+import me.formacion.model.Cita;
 import me.formacion.model.Diagnostico;
 import me.formacion.model.Medico;
 import me.formacion.model.Paciente;
@@ -57,8 +58,9 @@ public class DiagnosticoJPA implements IDiagnosticoDAO{
 		
 		query.select(query.from(Diagnostico.class));
 		result = em.createQuery(query).getResultList();
+		Diagnostico[] array = new Diagnostico[result.size()];
 		
-		return (Diagnostico[]) result.toArray();
+		return result.toArray(array);
 	}
 
 	@Override

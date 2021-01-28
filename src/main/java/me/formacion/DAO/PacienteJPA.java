@@ -24,7 +24,6 @@ public class PacienteJPA implements IPacienteDAO {
 	private EntityManager em;
 
 	public PacienteJPA() {
-		// TODO Auto-generated constructor stub
 	}
 	public PacienteJPA(EntityManager em) {
 		super();
@@ -58,8 +57,9 @@ public class PacienteJPA implements IPacienteDAO {
 		
 		query.select(query.from(Paciente.class));
 		result = em.createQuery(query).getResultList();
+		Paciente[] array = new Paciente[result.size()];
 		
-		return (Paciente[]) result.toArray();
+		return result.toArray(array);
 	}
 
 	@Override
@@ -79,10 +79,11 @@ public class PacienteJPA implements IPacienteDAO {
 		CriteriaQuery<Paciente> query = cb.createQuery(Paciente.class);
 		Root<Paciente> tables = query.from(Paciente.class);
 		
-		query.select(tables).where(cb.like(tables.get("nombre"), name));
+		query.select(tables).where(cb.like(tables.get("nombre"), "%"+name+"%"));
 		result = em.createQuery(query).getResultList();
+		Paciente[] array = new Paciente[result.size()];
 		
-		return (Paciente[]) result.toArray();
+		return result.toArray(array);
 	}
 
 	@Override
@@ -93,10 +94,11 @@ public class PacienteJPA implements IPacienteDAO {
 		CriteriaQuery<Paciente> query = cb.createQuery(Paciente.class);
 		Root<Paciente> tables = query.from(Paciente.class);
 		
-		query.select(tables).where(cb.like(tables.get("apellidos"), apellidos));
+		query.select(tables).where(cb.like(tables.get("apellidos"), "%"+apellidos+"%"));
 		result = em.createQuery(query).getResultList();
+		Paciente[] array = new Paciente[result.size()];
 		
-		return (Paciente[]) result.toArray();
+		return result.toArray(array);
 	}
 
 	@Override
@@ -107,24 +109,41 @@ public class PacienteJPA implements IPacienteDAO {
 		CriteriaQuery<Paciente> query = cb.createQuery(Paciente.class);
 		Root<Paciente> tables = query.from(Paciente.class);
 		
-		query.select(tables).where(cb.like(tables.get("usuario"), usuario));
+		query.select(tables).where(cb.like(tables.get("usuario"), "%"+usuario+"%"));
 		result = em.createQuery(query).getResultList();
+		Paciente[] array = new Paciente[result.size()];
 		
-		return (Paciente[]) result.toArray();
+		return result.toArray(array);
 	}
 
 	@Override
 	public Paciente[] findByTelefono(String telefono) {
-		Paciente[] result = null;
+		List<Paciente> result = null;
 		
-		return result;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Paciente> query = cb.createQuery(Paciente.class);
+		Root<Paciente> tables = query.from(Paciente.class);
+		
+		query.select(tables).where(cb.like(tables.get("telefono"), "%"+telefono+"%"));
+		result = em.createQuery(query).getResultList();
+		Paciente[] array = new Paciente[result.size()];
+		
+		return result.toArray(array);
 	}
 
 	@Override
 	public Paciente[] findByNumTarjeta(String numTarjeta) {
-		Paciente[] result = null;
+		List<Paciente> result = null;
 		
-		return result;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Paciente> query = cb.createQuery(Paciente.class);
+		Root<Paciente> tables = query.from(Paciente.class);
+		
+		query.select(tables).where(cb.like(tables.get("numTarjeta"), "%"+numTarjeta+"%"));
+		result = em.createQuery(query).getResultList();
+		Paciente[] array = new Paciente[result.size()];
+		
+		return result.toArray(array);
 	}
 
 	@Override

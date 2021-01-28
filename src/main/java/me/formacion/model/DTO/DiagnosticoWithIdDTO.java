@@ -6,6 +6,9 @@ public class DiagnosticoWithIdDTO {
     private String valoracionEspecialista;
     private String enfermedad;
     
+    public DiagnosticoWithIdDTO() {
+	}
+    
 	public DiagnosticoWithIdDTO(long id, long cita, String valoracionEspecialista, String enfermedad) {
 		super();
 		this.id = id;

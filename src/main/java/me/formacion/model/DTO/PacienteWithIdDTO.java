@@ -11,6 +11,8 @@ public class PacienteWithIdDTO extends UsuarioDTO{
 	private Set<Long> citas = new HashSet<>();
 	private Set<Long> medicos = new HashSet<>();
 	
+	public PacienteWithIdDTO() {
+	}
 	public PacienteWithIdDTO(Long id, String nombre, String apellidos, String usuario, String nSS,
 			String numTarjeta, String telefono, String direccion) {
 		super(id, nombre, apellidos, usuario);

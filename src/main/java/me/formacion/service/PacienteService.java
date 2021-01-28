@@ -107,4 +107,18 @@ public class PacienteService {
 		
 		return (Paciente[]) pacientes;
 	}
+
+	public void remove(Paciente paciente) {
+		//Elimina las citas
+		for(Cita cita: paciente.getCitas()) {
+			removeCita(cita.getMedico(), cita.getPaciente(), cita);
+		}
+		//Desvincula a los medicos del paciente
+		for (Medico medico : paciente.getMedicos()) {
+			medico.getPacientes().remove(paciente);
+			medicoDAO.store(medico);
+		}
+		
+		pacienteDAO.remove(paciente);
+	}
 }
