@@ -1,0 +1,5 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/juanAngel/formacion_citas_medicas_frontend.git/
+	pushurl = git@github.com:juanAngel/formacion_citas_medicas_frontend.git/
+	branch = origin/master
