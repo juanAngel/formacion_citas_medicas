@@ -7,18 +7,23 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.formacion.error.NotFoundException;
+import me.formacion.model.Cita;
 import me.formacion.model.Medico;
 import me.formacion.model.Paciente;
 import me.formacion.model.Usuario;
+import me.formacion.model.DTO.CitaDTO;
+import me.formacion.model.DTO.CitaWithIdDTO;
 import me.formacion.model.DTO.MedicoDTO;
 import me.formacion.model.DTO.MedicoWithIdDTO;
 import me.formacion.model.DTO.PacienteDTO;
@@ -30,6 +35,7 @@ import me.formacion.service.CitaService;
 import me.formacion.service.MedicoService;
 import me.formacion.service.PacienteService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/paciente/")
 public class PacienteController {
@@ -92,6 +98,21 @@ public class PacienteController {
 		return pacienteMapper.toDTO(paciente);
 	}
 	
+	@PostMapping("/citaRequest/{pacienteID}/{medicoID}")
+	CitaDTO citaRequest(@PathVariable Long pacienteID,@PathVariable Long medicoID) {
+		Cita c = new Cita();
+		
+		Medico m = medicoService.getOne(medicoID);
+		Paciente p = pacienteService.getOne(pacienteID);
+		
+		citaService.save(c);
+		pacienteService.addCita(m, p, c);
+
+		
+		
+		return citaMapper.toDTO(c);
+	}
+	
 	@GetMapping("/nombre/{name}")
 	public List<PacienteWithIdDTO> findByNombre(@PathVariable String name) {
 		ArrayList<PacienteWithIdDTO> medicosList = new ArrayList<>();
@@ -106,7 +127,7 @@ public class PacienteController {
 		return medicosList;
 	}
 	
-	@GetMapping("/apellidos/{name}")
+	@GetMapping("/apellidos/{apellidos}")
 	public List<PacienteWithIdDTO> findByApellidos(@PathVariable String apellidos) {
 		ArrayList<PacienteWithIdDTO> medicosList = new ArrayList<>();
 		
@@ -120,7 +141,7 @@ public class PacienteController {
 		return medicosList;
 	}
 
-	@GetMapping("/usuario/{name}")
+	@GetMapping("/usuario/{usuario}")
 	public List<PacienteWithIdDTO> findByUsuario(@PathVariable String usuario) {
 		ArrayList<PacienteWithIdDTO> medicosList = new ArrayList<>();
 		

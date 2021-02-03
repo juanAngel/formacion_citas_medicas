@@ -46,6 +46,12 @@ curl --header "Content-Type: application/json" \
  #findByNombre
  curl http://localhost:3000/api/paciente/nombre/fr && echo ""
  
+#findByApellidos
+curl http://localhost:3000/api/paciente/nombre/fr && echo ""
+
+#findByTelefono
+curl http://localhost:3000/api/paciente/telefono/6 && echo ""
+ 
  #delete
  
  curl --header "Content-Type: application/json" \

@@ -10,12 +10,14 @@ import org.omg.CosNaming.NamingContextPackage.NotFoundReasonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.formacion.error.NotFoundException;
@@ -31,6 +33,7 @@ import me.formacion.service.CitaService;
 import me.formacion.service.MedicoService;
 import me.formacion.service.PacienteService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/medico/")
 public class MedicoController {
@@ -89,7 +92,7 @@ public class MedicoController {
 		medicoService.remove(medico);
 	}
 	
-	@PostMapping("/{medicoID}/paciente/add/")
+	@PostMapping("/paciente/{medicoID}/")
 	MedicoDTO addPaciente(@PathVariable Long medicoID,@RequestBody Long pacienteID) {
 		Medico m = medicoService.getOne(medicoID);
 		Paciente p = pacienteService.getOne(pacienteID);
@@ -101,8 +104,8 @@ public class MedicoController {
 		return medicoMapper.toDTO(m);
 	}
 	
-	@DeleteMapping("/{medicoID}/paciente/remove/")
-	void removePaciente(@PathVariable Long medicoID,@RequestBody Long pacienteID) {
+	@DeleteMapping("/paciente/{medicoID}/{pacienteID}/")
+	void removePaciente(@PathVariable Long medicoID,@PathVariable Long pacienteID) {
 		Medico m = medicoService.getOne(medicoID);
 		Paciente p = pacienteService.getOne(pacienteID);
 		
@@ -112,7 +115,7 @@ public class MedicoController {
 		m = medicoService.removePaciente(m, p);
 	}
 	
-	@PostMapping("/{medicoID}/{pacienteID}/cita/add/")
+	@PostMapping("/cita/{medicoID}/{pacienteID}/")
 	CitaDTO addCita(@PathVariable Long medicoID,@PathVariable Long pacienteID, @RequestBody CitaWithIdDTO cita) {
 		CitaDTO citaDTO = null;
 		Medico m = medicoService.getOne(medicoID);
@@ -131,8 +134,8 @@ public class MedicoController {
 		return citaDTO;
 	}
 	
-	@DeleteMapping("/cita/remove/")
-	void removeCita(@RequestBody Long citaID) {
+	@DeleteMapping("/cita/{citaID}")
+	void removeCita(@PathVariable Long citaID) {
 		Cita c = citaService.getOne(citaID);
 		
 		if(c == null)
@@ -153,7 +156,7 @@ public class MedicoController {
 		return medicosList;
 	}
 	
-	@GetMapping("/apellidos/{name}")
+	@GetMapping("/apellidos/{apellidos}")
 	public List<MedicoWithIdDTO> findByApellidos(@PathVariable String apellidos) {
 		ArrayList<MedicoWithIdDTO> medicosList = new ArrayList<>();
 
@@ -166,7 +169,7 @@ public class MedicoController {
 		return medicosList;
 	}
 	
-	@GetMapping("/usuario/{name}")
+	@GetMapping("/usuario/{usuario}")
 	public List<MedicoWithIdDTO>  findByUsuario(@PathVariable String usuario) {
 		ArrayList<MedicoWithIdDTO> medicosList = new ArrayList<>();
 
@@ -179,7 +182,7 @@ public class MedicoController {
 		return medicosList;
 	}
 	
-	@GetMapping("/num_colegiado/{name}")
+	@GetMapping("/num_colegiado/{numColegiado}")
 	public List<MedicoWithIdDTO>  findByNumColegiado(@PathVariable String numColegiado) {
 		ArrayList<MedicoWithIdDTO> medicosList = new ArrayList<>();
 

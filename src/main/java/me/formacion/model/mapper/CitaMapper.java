@@ -28,9 +28,9 @@ public abstract class CitaMapper {
 	@Autowired
 	private MedicoService medicoService;
 	
-	public abstract CitaDTO toDTO(Cita m);
-	public abstract CitaWithIdDTO toDTOWithId(Cita m);
-	public abstract Cita toEntity(CitaWithIdDTO m);
+	public abstract CitaDTO toDTO(Cita c);
+	public abstract CitaWithIdDTO toDTOWithId(Cita c);
+	public abstract Cita toEntity(CitaWithIdDTO c);
 
 	public abstract Set<Long> mapPacientes(Set<Paciente> value);
 	public abstract Set<Long> mapCitas(Set<Cita> value);
