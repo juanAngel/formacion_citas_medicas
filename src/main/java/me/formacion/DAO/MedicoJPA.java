@@ -83,6 +83,7 @@ public class MedicoJPA implements IMedicoDAO {
 		em.persist(m);
 	}
 	
+	@Override
 	public Medico merge(Usuario m) {
 		return (Medico) em.merge(m);
 	}

@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.formacion.model.Cita;
+import me.formacion.model.Diagnostico;
 import me.formacion.model.DTO.CitaDTO;
 import me.formacion.model.DTO.CitaWithIdDTO;
+import me.formacion.model.DTO.DiagnosticoDTO;
+import me.formacion.model.DTO.DiagnosticoWithIdDTO;
 import me.formacion.model.mapper.CitaMapper;
+import me.formacion.model.mapper.DiagnosticoMapper;
 import me.formacion.service.CitaService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -31,6 +35,8 @@ public class CitaController {
 	private CitaService citaService;
 	@Autowired
 	private CitaMapper citaMapper;
+	@Autowired
+	private DiagnosticoMapper diagnosticoMapper;
 	
 	@PostMapping("/")
 	Long save(@RequestBody CitaWithIdDTO citaDTO){
@@ -58,7 +64,7 @@ public class CitaController {
 		
 		return medicosList;
 	}
-	@GetMapping("/:id")
+	@GetMapping("/{id}")
 	CitaDTO getById(@PathVariable Long id){
 
 		Cita cita = citaService.getOne(id);
@@ -67,7 +73,7 @@ public class CitaController {
 		}
 		return citaMapper.toDTO(cita);
 	}
-	@GetMapping("/at/:start/:end")
+	@GetMapping("/at/{start}/{end}")
 	public List<CitaWithIdDTO> getAtDate(@PathVariable Long start,@PathVariable Long end) {
 		ArrayList<CitaWithIdDTO> citasDTO = new ArrayList<>();
 		
@@ -82,5 +88,30 @@ public class CitaController {
 		}
 		
 		return citasDTO;
+	}
+	@PostMapping("/update/{citaID}")
+	CitaWithIdDTO updateDate(@PathVariable Long citaID, @RequestBody Long date){
+		Cita c = citaService.getOne(citaID);
+		if(c == null) {
+			throw new EntityNotFoundException();
+		}
+		citaService.setDatetime(c, new Date(date));
+
+		return citaMapper.toDTOWithId(c);
+	}
+	@PostMapping("/diagnostic/{citaID}")
+	CitaWithIdDTO setDiagnostic(@PathVariable Long citaID,@RequestBody DiagnosticoWithIdDTO diagnosticDTO){
+		if(diagnosticDTO == null) {
+			throw new InvalidParameterException();
+		}
+		Cita cita = citaService.getOne(citaID);
+		if(cita == null) {
+			throw new EntityNotFoundException();
+		}
+		Diagnostico d = diagnosticoMapper.toEntity(diagnosticDTO);
+		
+		cita = citaService.setDiagnostico(cita, d);
+		
+		return citaMapper.toDTOWithId(cita);
 	}
 }

@@ -8,6 +8,7 @@ public interface ICitaDAO {
 	Cita getById(Long id);
 	Cita[] getAll();
 	Cita[] getAtDate(Date start, Date end);
-	void store(Cita d);
+	void store(Cita c);
+	Cita merge(Cita c);
 	void remove(Cita d);
 }

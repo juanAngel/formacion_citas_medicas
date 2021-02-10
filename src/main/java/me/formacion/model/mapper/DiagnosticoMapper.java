@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Set;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.NullValueCheckStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import me.formacion.model.Cita;
@@ -15,7 +17,9 @@ import me.formacion.model.DTO.DiagnosticoDTO;
 import me.formacion.model.DTO.DiagnosticoWithIdDTO;
 import me.formacion.service.CitaService;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+		nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+		nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public abstract class DiagnosticoMapper {
 	@Autowired
 	private CitaService citaService;

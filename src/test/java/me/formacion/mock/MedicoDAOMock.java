@@ -55,7 +55,7 @@ public class MedicoDAOMock implements IMedicoDAO {
 	}
 
 	@Override
-	public Usuario merge(Usuario p) {
+	public Medico merge(Usuario p) {
 		// TODO Auto-generated method stub
 		return null;
 	}

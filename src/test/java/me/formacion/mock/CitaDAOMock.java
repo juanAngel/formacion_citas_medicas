@@ -37,4 +37,10 @@ public class CitaDAOMock implements ICitaDAO {
 		return null;
 	}
 
+	@Override
+	public Cita merge(Cita d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

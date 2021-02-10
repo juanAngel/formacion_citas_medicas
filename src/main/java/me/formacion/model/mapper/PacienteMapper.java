@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Set;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.NullValueCheckStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import me.formacion.model.Cita;
@@ -17,7 +19,9 @@ import me.formacion.model.DTO.PacienteWithIdDTO;
 import me.formacion.service.CitaService;
 import me.formacion.service.MedicoService;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+		nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+		nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public abstract class PacienteMapper {
 
 	@Autowired
@@ -35,10 +39,14 @@ public abstract class PacienteMapper {
 	public abstract Set<Long> mapDiagnosticos(Set<Diagnostico> value);
 	
 	public Long map(IUnique value) {
-		return value.getId();
+		if(value != null)
+			return value.getId();
+		return null;
 	}
 	public Long map(Date value) {
-		return value.getTime();
+		if(value != null)
+			return value.getTime();
+		return null;
 	}
 	public Cita getCita(Long id) {
 		return citaService.getOne(id);

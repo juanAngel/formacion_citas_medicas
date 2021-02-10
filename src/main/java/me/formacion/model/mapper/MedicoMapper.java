@@ -2,10 +2,9 @@ package me.formacion.model.mapper;
 
 import java.util.Date;
 import java.util.Set;
-
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.NullValueCheckStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import me.formacion.model.Cita;
@@ -16,9 +15,11 @@ import me.formacion.model.Paciente;
 import me.formacion.model.DTO.MedicoDTO;
 import me.formacion.model.DTO.MedicoWithIdDTO;
 import me.formacion.service.CitaService;
-import me.formacion.service.PacienteService;;
+import me.formacion.service.PacienteService;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+		nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+		nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public abstract class MedicoMapper {
 	@Autowired
 	private CitaService citaService;

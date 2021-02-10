@@ -68,6 +68,10 @@ public class CitaJPA implements ICitaDAO {
 	public void store(Cita c) {
 		em.persist(c);
 	}
+	@Override
+	public Cita merge(Cita c) {
+		return em.merge(c);
+	}
 
 	@Override
 	public void remove(Cita c) {

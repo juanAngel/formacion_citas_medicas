@@ -60,13 +60,19 @@ public class CitaService {
 		
 		citaDAO.remove(c);
 	}
-	
+
 	public Cita setDiagnostico(Cita c, Diagnostico d) {
 		
+		c = citaDAO.merge(c);
 		c.setDiagnostico(d);
 		d.setCita(c);
-		citaDAO.store(c);
 		diagnosticoDAO.store(d);		
+		
+		return c;
+	}
+	public Cita setDatetime(Cita c, Date datetime) {
+		c = citaDAO.merge(c);
+		c.setFechaHora(datetime);
 		
 		return c;
 	}

@@ -34,8 +34,7 @@ public class PacienteService {
 	}
 	
 	public Paciente update(Paciente p) {
-		pacienteDAO.store(p);
-		return p;
+		return pacienteDAO.merge(p);
 	}
 
 	public Paciente getOne(long id) {
@@ -46,21 +45,31 @@ public class PacienteService {
 	public Paciente[] getAll() {
 		return (Paciente[]) pacienteDAO.getAll();
 	}
-	public Paciente addMedico(Medico m,Paciente p) {
+	public Paciente addMedico(Paciente p, Medico m) {
+		m = medicoDAO.merge(m);
+		p = pacienteDAO.merge(p);
+		
 		m.getPacientes().add(p);
 		p.getMedicos().add(m);
 		medicoDAO.store(m);
 		pacienteDAO.store(p);
 		return p;
 	}
-	public Paciente removeMedico(Medico m,Paciente p) {
+	public Paciente removeMedico(Paciente p,Medico m) {
+		m = medicoDAO.merge(m);
+		p = pacienteDAO.merge(p);
+		
 		m.getPacientes().remove(p);
 		p.getMedicos().remove(m);
 		medicoDAO.store(m);
 		pacienteDAO.store(p);
 		return p;
 	}
-	public Paciente addCita(Medico m,Paciente p,Cita c) {
+	public Paciente addCita(Paciente p,Medico m,Cita c) {
+		m = medicoDAO.merge(m);
+		p = pacienteDAO.merge(p);
+		c = citaDAO.merge(c);
+		
 		m.getCitas().add(c);
 		p.getCitas().add(c);
 		c.setMedico(m);
@@ -71,14 +80,20 @@ public class PacienteService {
 		citaDAO.store(c);
 		return p;
 	}
-	public Paciente removeCita(Medico m,Paciente p,Cita c) {
+	public Paciente removeCita(Cita c) {
+		c = citaDAO.merge(c);
+		
+		Paciente p = c.getPaciente();
+		Medico m = c.getMedico();
+		
 		m.getCitas().remove(c);
 		p.getCitas().remove(c);
 		c.setMedico(null);
 		c.setPaciente(null);
-		medicoDAO.store(m);
+		
+		medicoDAO.store(m);/**/
 		pacienteDAO.store(p);
-		citaDAO.store(c);
+		citaDAO.remove(c);
 		return p;
 	}
 
@@ -111,7 +126,7 @@ public class PacienteService {
 	public void remove(Paciente paciente) {
 		//Elimina las citas
 		for(Cita cita: paciente.getCitas()) {
-			removeCita(cita.getMedico(), cita.getPaciente(), cita);
+			removeCita(cita);
 		}
 		//Desvincula a los medicos del paciente
 		for (Medico medico : paciente.getMedicos()) {

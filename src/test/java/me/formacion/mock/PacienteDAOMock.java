@@ -61,7 +61,7 @@ public class PacienteDAOMock implements IPacienteDAO{
 	}
 
 	@Override
-	public Usuario merge(Usuario p) {
+	public Paciente merge(Usuario p) {
 		// TODO Auto-generated method stub
 		return null;
 	}

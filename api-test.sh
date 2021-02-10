@@ -20,6 +20,11 @@ curl --header "Content-Type: application/json" \
  #findByNombre
  curl http://localhost:3000/api/medico/nombre/fr && echo ""
  
+ # add medico to paciente
+ curl --header "Content-Type: application/json" \
+  --request POST --data '4' \
+ http://localhost:3000/api/paciente/medico/52/  && echo ""
+ 
  
  #delete
  

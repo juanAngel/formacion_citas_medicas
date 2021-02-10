@@ -97,20 +97,56 @@ public class PacienteController {
 		}
 		return pacienteMapper.toDTO(paciente);
 	}
+
+	@PostMapping("/medico/{pacienteID}")
+	PacienteDTO addMedico(@PathVariable Long pacienteID, @RequestBody Long medicoID) {
+		Medico m = medicoService.getOne(medicoID);
+		Paciente p = pacienteService.getOne(pacienteID);
+		if(m == null || p == null) {
+			throw new NotFoundException();
+		}
+		p = pacienteService.addMedico(p, m);
+		
+		return pacienteMapper.toDTO(p);
+	}
 	
-	@PostMapping("/citaRequest/{pacienteID}/{medicoID}")
-	CitaDTO citaRequest(@PathVariable Long pacienteID,@PathVariable Long medicoID) {
+	@DeleteMapping("/medico/{pacienteID}/{medicoID}")
+	PacienteDTO removeMedico(@PathVariable Long pacienteID, @PathVariable Long medicoID) {
+		System.out.printf("[trace] removeMedico");
+		Medico m = medicoService.getOne(medicoID);
+		Paciente p = pacienteService.getOne(pacienteID);
+		
+		if(m == null || p == null) {
+			throw new NotFoundException();
+		}
+		p = pacienteService.removeMedico(p, m);
+
+		return pacienteMapper.toDTO(p);
+	}
+	
+	@PostMapping("/requestCita/{pacienteID}/{medicoID}")
+	PacienteDTO requestCita(@PathVariable Long pacienteID,@PathVariable Long medicoID,@RequestBody String motivoCita) {
 		Cita c = new Cita();
+		c.setMotivoCita(motivoCita);
 		
 		Medico m = medicoService.getOne(medicoID);
 		Paciente p = pacienteService.getOne(pacienteID);
 		
 		citaService.save(c);
-		pacienteService.addCita(m, p, c);
+		p = pacienteService.addCita(p, m, c);
+		
+		
+		return pacienteMapper.toDTO(p);
+	}
+	@DeleteMapping("/requestCita/{citaID}")
+	PacienteDTO cancelCita(@PathVariable Long citaID) {
 
+		Cita c = citaService.getOne(citaID);
+		if(c == null)
+			throw new EntityNotFoundException();
+		Paciente p = pacienteService.removeCita(c);
 		
-		
-		return citaMapper.toDTO(c);
+		return pacienteMapper.toDTO(p);
 	}
 	
 	@GetMapping("/nombre/{name}")
