@@ -51,7 +51,7 @@ curl --header "Content-Type: application/json" \
  #findByNombre
  curl http://localhost:3000/api/paciente/nombre/fr && echo ""
  
-#findByApellidos
+#findByApellidoszzz
 curl http://localhost:3000/api/paciente/nombre/fr && echo ""
 
 #findByTelefono
@@ -62,3 +62,9 @@ curl http://localhost:3000/api/paciente/telefono/6 && echo ""
  curl --header "Content-Type: application/json" \
   --request DELETE \
  http://localhost:3000/api/paciente/51 && echo ""
+ 
+ 
+ 
+ curl --header "Content-Type: application/json" \
+  --request POST --data '{"id":0,"cita":0,"enfermedad":"covid","valoracionEspecialista":"grave"}' \
+ http://localhost:3000/api/cita/diagnostic/252  && echo ""
